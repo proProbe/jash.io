@@ -4,28 +4,36 @@ import {
   GraphQLInt,
   GraphQLString,
   GraphQLList,
+  GraphQLID
 } from 'graphql';
-
 import WebScraper from '../api/WebScraper';
-const ws = new WebScraper();
+import UTF8Helper from '../helpers/utf8.helper';
+const scraper = new WebScraper();
+const utf8 = new UTF8Helper();
+
+let store = {};
 
 let japaneseObjectType = new GraphQLObjectType({
   name: "Japanese",
   fields: () => ({
     furigana: { type: GraphQLString },
-    kanji: { type: GraphQLString }
+    kanji: { type: GraphQLString },
+    type: { type: GraphQLString },
+    level: { type: GraphQLString }
   })
 });
 
 let englishObjectType = new GraphQLObjectType({
   name: "English",
   fields: () => ({
-    word: { type: GraphQLString }
+    meaning: { type: GraphQLString },
+    tags: { type: GraphQLString },
+    number: { type: GraphQLInt }
   })
 });
 
-let scrapedDataType = new GraphQLObjectType({
-  name: "ScrapedData",
+let storeType = new GraphQLObjectType({
+  name: "Store",
   fields: () => ({
     english: {
       type: englishObjectType
@@ -40,9 +48,10 @@ let schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
     fields: () => ({
-      data: {
-        type: scrapedDataType,
-        resolve: () => ws.scrape('japanese')
+      store: {
+        type: storeType,
+        args: { word: { type: GraphQLString }},
+        resolve: (_, {word}) => scraper.scrape( utf8.encode(word) )
       }
     })
   }),

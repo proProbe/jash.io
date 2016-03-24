@@ -1,18 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Main from '../components/main';
+import Relay from 'react-relay';
 
-class Hello extends React.Component {
-  render() {
-    return (
-      <div>
-        Hello
-        something should be here!!!!
-      </div>
-    )
+class HomeRoute extends Relay.Route {
+  static routeName = 'Home';
+  static queries = {
+    store: (Component) => Relay.QL`
+      query MainQuery {
+        store { ${Component.getFragment('store')} }
+      }
+    `
   }
 }
 
 ReactDOM.render(
-  <Hello />,
-document.getElementById('react')
-)
+  <Relay.RootContainer
+    Component={Main}
+    route={new HomeRoute()}
+  />,
+  document.getElementById('react')
+);
