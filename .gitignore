@@ -1,3 +1,10 @@
+# graphql schema.json
+schema.json
+
+# webpack bundles
+bundle.js
+bundle.js.map
+
 # Logs
 logs
 *.log
