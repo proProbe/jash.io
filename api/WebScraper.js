@@ -7,6 +7,7 @@ class WebScraper {
   }
 
   scrape(word) {
+    console.log(word);
     return request(this.baseURL + word)
       .then((res) => {
         const $ = cheerio.load(res, {

@@ -6,11 +6,13 @@ import Relay from 'react-relay';
 class HomeRoute extends Relay.Route {
   static routeName = 'Home';
   static queries = {
-    store: (Component) => Relay.QL`
+    store: (Component) => {
+      return Relay.QL`
       query MainQuery {
         store { ${Component.getFragment('store')} }
       }
     `
+  }
   }
 }
 

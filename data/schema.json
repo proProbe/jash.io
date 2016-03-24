@@ -17,6 +17,29 @@
             {
               "name": "store",
               "description": null,
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Store",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "Store",
+          "description": null,
+          "fields": [
+            {
+              "name": "translation",
+              "description": null,
               "args": [
                 {
                   "name": "word",
@@ -31,7 +54,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "Store",
+                "name": "Translation",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -55,7 +78,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "Store",
+          "name": "Translation",
           "description": null,
           "fields": [
             {

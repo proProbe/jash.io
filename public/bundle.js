@@ -20235,7 +20235,14 @@
 	      args[_key] = arguments[_key];
 	    }
 	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Main)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.onChange = function () {}, _temp), _possibleConstructorReturn(_this, _ret);
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Main)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.onChange = function (e) {
+	      if (e.keyCode === 13) {
+	        var newWord = e.target.value;
+	        _this.props.relay.setVariables({
+	          word: newWord
+	        });
+	      }
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 	
 	  // No need to prebind the onchange as it is set as a property now
@@ -20244,14 +20251,15 @@
 	  _createClass(Main, [{
 	    key: 'render',
 	    value: function render() {
-	      // console.log(this.props);
+	      var store = this.props.store;
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement('input', { type: 'text' }),
-	        _react2.default.createElement(_englishContainer2.default, { english: this.props.store.english }),
+	        _react2.default.createElement('input', { type: 'text', onKeyUp: this.onChange }),
+	        _react2.default.createElement(_englishContainer2.default, { english: store.translation.english }),
 	        _react2.default.createElement('hr', null),
-	        _react2.default.createElement(_japaneseContainer2.default, { japanese: this.props.store.japanese })
+	        _react2.default.createElement(_japaneseContainer2.default, { japanese: store.translation.japanese })
 	      );
 	    }
 	  }]);
@@ -20272,21 +20280,38 @@
 	      return function (RQL_0, RQL_1) {
 	        return {
 	          children: [{
-	            children: [].concat.apply([], [_reactRelay2.default.QL.__frag(RQL_0)]),
-	            fieldName: 'english',
+	            calls: [{
+	              kind: 'Call',
+	              metadata: {},
+	              name: 'word',
+	              value: {
+	                kind: 'CallVariable',
+	                callVariableName: 'word'
+	              }
+	            }],
+	            children: [{
+	              children: [].concat.apply([], [_reactRelay2.default.QL.__frag(RQL_0)]),
+	              fieldName: 'english',
+	              kind: 'Field',
+	              metadata: {
+	                canHaveSubselections: true
+	              },
+	              type: 'English'
+	            }, {
+	              children: [].concat.apply([], [_reactRelay2.default.QL.__frag(RQL_1)]),
+	              fieldName: 'japanese',
+	              kind: 'Field',
+	              metadata: {
+	                canHaveSubselections: true
+	              },
+	              type: 'Japanese'
+	            }],
+	            fieldName: 'translation',
 	            kind: 'Field',
 	            metadata: {
 	              canHaveSubselections: true
 	            },
-	            type: 'English'
-	          }, {
-	            children: [].concat.apply([], [_reactRelay2.default.QL.__frag(RQL_1)]),
-	            fieldName: 'japanese',
-	            kind: 'Field',
-	            metadata: {
-	              canHaveSubselections: true
-	            },
-	            type: 'Japanese'
+	            type: 'Translation'
 	          }],
 	          id: _reactRelay2.default.QL.__id(),
 	          kind: 'Fragment',
@@ -20294,7 +20319,7 @@
 	          name: 'Main_StoreRelayQL',
 	          type: 'Store'
 	        };
-	      }(_englishContainer2.default.getFragment('english'), _japaneseContainer2.default.getFragment('japanese'));
+	      }(_englishContainer2.default.getFragment("english"), _japaneseContainer2.default.getFragment("japanese"));
 	    }
 	  }
 	});
@@ -43468,7 +43493,7 @@
 	          id: _reactRelay2.default.QL.__id(),
 	          kind: "Fragment",
 	          metadata: {},
-	          name: "S",
+	          name: "JapaneseContainer_JapaneseRelayQL",
 	          type: "Japanese"
 	        };
 	      }();
@@ -43584,7 +43609,7 @@
 	          id: _reactRelay2.default.QL.__id(),
 	          kind: "Fragment",
 	          metadata: {},
-	          name: "S",
+	          name: "EnglishContainer_EnglishRelayQL",
 	          type: "English"
 	        };
 	      }();

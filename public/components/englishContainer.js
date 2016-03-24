@@ -23,7 +23,7 @@ class EnglishContainer extends React.Component {
 EnglishContainer = Relay.createContainer(EnglishContainer, {
   fragments: {
     english: () => Relay.QL`
-      fragments on English {
+      fragment on English {
         meaning,
         tags,
         number

@@ -29,7 +29,7 @@ class JapaneseContainer extends React.Component {
 JapaneseContainer = Relay.createContainer(JapaneseContainer, {
   fragments: {
     japanese: () => Relay.QL`
-      fragments on Japanese {
+      fragment on Japanese {
         furigana,
         kanji,
         type,

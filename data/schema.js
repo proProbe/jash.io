@@ -32,8 +32,8 @@ let englishObjectType = new GraphQLObjectType({
   })
 });
 
-let storeType = new GraphQLObjectType({
-  name: "Store",
+let translationType = new GraphQLObjectType({
+  name: "Translation",
   fields: () => ({
     english: {
       type: englishObjectType
@@ -44,14 +44,24 @@ let storeType = new GraphQLObjectType({
   })
 })
 
+let storeType = new GraphQLObjectType({
+  name: "Store",
+  fields: () => ({
+    translation: {
+      type: translationType,
+      args: { word: { type: GraphQLString }},
+      resolve: (_, {word}) => scraper.scrape( utf8.encode(word) )
+    }
+  })
+})
+
 let schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
     fields: () => ({
       store: {
         type: storeType,
-        args: { word: { type: GraphQLString }},
-        resolve: (_, {word}) => scraper.scrape( utf8.encode(word) )
+        resolve: () => store
       }
     })
   }),

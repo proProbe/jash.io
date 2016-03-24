@@ -12,43 +12,48 @@ class Main extends React.Component{
   static defaultProps = {
 
   }
-
-
-
+  
   // No need to prebind the onchange as it is set as a property now
-  onChange = () => {
-
+  onChange = (e) => {
+    if(e.keyCode === 13) {
+      let newWord = e.target.value;
+      this.props.relay.setVariables({
+        word: newWord
+      });
+    }
   }
 
   render() {
-    // console.log(this.props);
+    let {store} = this.props
     return (
       <div>
-        <input type="text"/>
-        <EnglishContainer english={this.props.store.english} />
+        <input type="text" onKeyUp={this.onChange}/>
+        <EnglishContainer english={store.translation.english} />
         <hr/>
-        <JapaneseContainer japanese={this.props.store.japanese}/>
+        <JapaneseContainer japanese={store.translation.japanese}/>
       </div>
     )
   }
 }
 
 Main = Relay.createContainer(Main, {
-  initialVariables:{
+  initialVariables: {
     word: "testing"
   },
   fragments: {
     store: () => Relay.QL`
-      fragment on Store{
-        english {
-          ${EnglishContainer.getFragment('english')}
-        },
-        japanese {
-          ${JapaneseContainer.getFragment('japanese')}
+      fragment on Store {
+        translation (word: $word) {
+          english {
+            ${EnglishContainer.getFragment("english")}
+          },
+          japanese {
+            ${JapaneseContainer.getFragment("japanese")}
+          }
         }
       }
     `
   }
-})
+});
 
 export default Main;
