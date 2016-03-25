@@ -42,10 +42,10 @@ class Main extends React.Component{
           </div>
         </div>
         <div className="row">
-            <div className="col s6">
+            <div className="col s12 m6">
               <EnglishContainer english={store.translation.english} />
             </div>
-            <div className="col s6">
+            <div className="col s12 m6">
               <JapaneseContainer japanese={store.translation.japanese}/>
             </div>
         </div>

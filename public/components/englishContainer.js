@@ -5,7 +5,7 @@ class EnglishContainer extends React.Component {
   render() {
     let {english} = this.props;
     return (
-      <div className="card blue darken-1">
+      <div className="card blue darken-1 hoverable">
         <div className="card-content white-text">
           <div className="card-title">
               {english.number}
