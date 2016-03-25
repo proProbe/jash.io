@@ -5,16 +5,21 @@ class EnglishContainer extends React.Component {
   render() {
     let {english} = this.props;
     return (
-      <div>
-        <li>
-          <a href="">{english.meaning}</a>
-        </li>
-        <li>
-          <a href="">{english.tags}</a>
-        </li>
-        <li>
-          <a href="">{english.number}</a>
-        </li>
+      <div className="card blue darken-1 small">
+        <div className="card-content white-text">
+          <div className="card-title">
+              {/*Eng Translation*/}
+              {english.number}
+          </div>
+          <p>
+            {english.meaning}
+            {english.tags}
+          </p>
+          <div className="card-action">
+            <p>
+            </p>
+          </div>
+        </div>
       </div>
     )
   }

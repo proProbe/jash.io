@@ -5,22 +5,22 @@ class JapaneseContainer extends React.Component {
   render() {
     let {japanese} = this.props;
     return (
-      <div>
-        <li>
-          <a href="">{japanese.furigana}</a>
-
-        </li>
-        <li>
-          <a href="">{japanese.kanji}</a>
-
-        </li>
-        <li>
-          <a href="">{japanese.type}</a>
-
-        </li>
-        <li>
-          <a href="">{japanese.level}</a>
-        </li>
+      <div className="card green darken-1 small">
+        <div className="card-content white-text">
+          <div className="card-title">
+              {/*Jap Translation*/}
+              {japanese.kanji}
+          </div>
+          <p>
+            {japanese.furigana}
+            {japanese.type}
+          </p>
+          <div className="card-action">
+            <p>
+              {japanese.level}
+            </p>
+          </div>
+        </div>
       </div>
     )
   }

@@ -12,7 +12,7 @@ class Main extends React.Component{
   static defaultProps = {
 
   }
-  
+
   // No need to prebind the onchange as it is set as a property now
   onChange = (e) => {
     if(e.keyCode === 13) {
@@ -26,11 +26,19 @@ class Main extends React.Component{
   render() {
     let {store} = this.props
     return (
-      <div>
-        <input type="text" onKeyUp={this.onChange}/>
-        <EnglishContainer english={store.translation.english} />
-        <hr/>
-        <JapaneseContainer japanese={store.translation.japanese}/>
+      <div className="container">
+        <div className="row">
+          <input type="text" onKeyUp={this.onChange}/>
+        </div>
+        <div className="row">
+            <div className="col s6">
+              <EnglishContainer english={store.translation.english} />
+            </div>
+            <div className="col s6">
+              <JapaneseContainer japanese={store.translation.japanese}/>
+            </div>
+        </div>
+
       </div>
     )
   }
