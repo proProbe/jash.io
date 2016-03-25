@@ -5,7 +5,7 @@ class JapaneseContainer extends React.Component {
   render() {
     let {japanese} = this.props;
     return (
-      <div className="card green darken-1 small">
+      <div className="card green darken-1">
         <div className="card-content white-text">
           <div className="card-title">
               {/*Jap Translation*/}

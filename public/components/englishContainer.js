@@ -5,10 +5,9 @@ class EnglishContainer extends React.Component {
   render() {
     let {english} = this.props;
     return (
-      <div className="card blue darken-1 small">
+      <div className="card blue darken-1">
         <div className="card-content white-text">
           <div className="card-title">
-              {/*Eng Translation*/}
               {english.number}
           </div>
           <p>

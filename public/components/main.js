@@ -7,16 +7,24 @@ import EnglishContainer from './englishContainer';
 class Main extends React.Component{
   static propTypes = {
 
-  }
+  };
 
   static defaultProps = {
 
-  }
+  };
+
+  state = { searching: false };
+
+  // Set state when new props arrives
+  componentWillReceiveProps() {
+    this.setState({ searching: false })
+  };
 
   // No need to prebind the onchange as it is set as a property now
   onChange = (e) => {
     if(e.keyCode === 13) {
       let newWord = e.target.value;
+      this.setState({ searching: true });
       this.props.relay.setVariables({
         word: newWord
       });
@@ -28,7 +36,10 @@ class Main extends React.Component{
     return (
       <div className="container">
         <div className="row">
-          <input type="text" onKeyUp={this.onChange}/>
+          <div className="input-field col s12">
+            <input disabled={this.state.searching} id="keyword" type="text" className="validate" onKeyUp={this.onChange}/>
+            <label htmlFor="keyword" className="active">Keyword</label>
+          </div>
         </div>
         <div className="row">
             <div className="col s6">

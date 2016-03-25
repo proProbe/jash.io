@@ -50,7 +50,7 @@ let storeType = new GraphQLObjectType({
     translation: {
       type: translationType,
       args: { word: { type: GraphQLString }},
-      resolve: (_, {word}) => scraper.scrape( utf8.encode(word) )
+      resolve: (_, {word}) => scraper.scrape( utf8.encode(word.toLowerCase()) )
     }
   })
 })
