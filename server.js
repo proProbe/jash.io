@@ -39,7 +39,7 @@ app.use(express.static(publicPath));
     // We require the bundler inside the if block because
     // it is only needed in a development environment. Later
     // you will see why this is a good idea
-    let bundle = require('./server/bundle.js');
+    let bundle = require('./server/bundler.js');
     bundle();
 
     // Any requests to localhost:3000/build is proxied
