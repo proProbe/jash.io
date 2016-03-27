@@ -1,8 +1,6 @@
 import React from 'react';
 import Relay from 'react-relay';
 
-import JapaneseContainer from './japaneseContainer';
-import EnglishContainer from './englishContainer';
 import CardComponent from './cardComponent';
 
 class Main extends React.Component{
@@ -41,6 +39,7 @@ class Main extends React.Component{
   }
 
   renderCards = (store) => {
+    console.log(store);
     return [...Array(5)].map((x, i) => {
       return (
         <div className="col s12 m6 l4" key={i}>
@@ -81,7 +80,7 @@ class Main extends React.Component{
 
 Main = Relay.createContainer(Main, {
   initialVariables: {
-    word: "testing"
+    word: ""
   },
   fragments: {
     store: () => Relay.QL`

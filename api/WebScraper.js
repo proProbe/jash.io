@@ -22,7 +22,6 @@ class WebScraper {
           english: english,
           japanese: japanese
         };
-
         return json
       })
       .catch((err) => {
@@ -31,30 +30,39 @@ class WebScraper {
   }
 
   _scrapeJapanese($) {
-
+    let japArr = [];
     let japanese = {
-      furigana: 'Not found',
-      kanji: 'Not found',
-      type: 'Not found',
-      level: 'Not found'
+      furigana: 'Furigana',
+      kanji: 'Kanji',
+      type: 'Type',
+      level: 'Level'
     };
 
-    $('#primary > div.exact_block > div:nth-child(2) > div.concept_light-wrapper.columns.zero-padding').filter(function(i, el) {
+    $('#primary > div.exact_block  div.concept_light-wrapper.columns.zero-padding').filter(function(i, el) {
+      console.log(i);
       let data = $(this);
       japanese.furigana = data.find('span.furigana').first().text();
       japanese.kanji = data.find('span.text').first().text();
+      console.log(japanese.kanji);
       japanese.type = data.find('span.concept_light-common').first().text();
       japanese.level = data.find('span.concept_light-tag > a').first().text();
+      japArr.push(japanese);
     });
 
+    // if the arr is empty, init it
+    // if (japArr.length === 0) {
+    //   japArr.push(japanese);
+    // }
+    //
+    // return japArr;
     return japanese;
   }
 
   _scrapeEnglish($) {
 
     let english = {
-      meaning: 'Not found',
-      tags: 'Not found',
+      meaning: 'Meaning',
+      tags: 'Tags',
       number: -1,
     };
     $('#primary > div.exact_block > div:nth-child(2) > div.concept_light-meanings.medium-9.columns > div.meanings-wrapper').filter(function(i, el) {

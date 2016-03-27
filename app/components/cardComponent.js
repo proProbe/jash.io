@@ -1,8 +1,8 @@
 import React from 'react';
 import Relay from 'react-relay';
 
-import JapaneseContainer from './japaneseContainer';
-import EnglishContainer from './englishContainer';
+import JapaneseComponent from './japaneseComponent';
+import EnglishComponent from './englishComponent';
 import Tags from './tags.js';
 
 class CardComponent extends React.Component{
@@ -18,10 +18,10 @@ class CardComponent extends React.Component{
           <hr/>
           <div className="row">
             <div className="col s12 m4">
-              <JapaneseContainer japanese={translation.japanese}/>
+              <JapaneseComponent japanese={translation.japanese}/>
             </div>
             <div className="col s12 m8">
-              <EnglishContainer english={translation.english} />
+              <EnglishComponent english={translation.english} />
             </div>
           </div>
           <div className="row">
@@ -42,10 +42,10 @@ CardComponent = Relay.createContainer(CardComponent, {
       fragment on Translation {
         keyword,
         english {
-          ${EnglishContainer.getFragment("english")}
+          ${EnglishComponent.getFragment("english")}
         },
         japanese {
-          ${JapaneseContainer.getFragment("japanese")},
+          ${JapaneseComponent.getFragment("japanese")},
           ${Tags.getFragment("japanese")}
         }
       }

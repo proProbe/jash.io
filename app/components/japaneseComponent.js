@@ -1,7 +1,7 @@
 import React from "react";
 import Relay from "react-relay";
 
-class JapaneseContainer extends React.Component {
+class JapaneseComponent extends React.Component {
 
   render() {
     let {japanese} = this.props;
@@ -20,7 +20,7 @@ class JapaneseContainer extends React.Component {
   }
 }
 
-JapaneseContainer = Relay.createContainer(JapaneseContainer, {
+JapaneseComponent = Relay.createContainer(JapaneseComponent, {
   fragments: {
     japanese: () => Relay.QL`
       fragment on Japanese {
@@ -31,4 +31,4 @@ JapaneseContainer = Relay.createContainer(JapaneseContainer, {
   }
 });
 
-export default JapaneseContainer;
+export default JapaneseComponent;

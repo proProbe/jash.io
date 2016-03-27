@@ -1,7 +1,7 @@
 import React from "react";
 import Relay from "react-relay";
 
-class EnglishContainer extends React.Component {
+class EnglishComponent extends React.Component {
   render() {
     let {english} = this.props;
     return (
@@ -20,7 +20,7 @@ class EnglishContainer extends React.Component {
   }
 }
 
-EnglishContainer = Relay.createContainer(EnglishContainer, {
+EnglishComponent = Relay.createContainer(EnglishComponent, {
   fragments: {
     english: () => Relay.QL`
       fragment on English {
@@ -32,4 +32,4 @@ EnglishContainer = Relay.createContainer(EnglishContainer, {
   }
 });
 
-export default EnglishContainer;
+export default EnglishComponent;

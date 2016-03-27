@@ -40,6 +40,7 @@ let translationType = new GraphQLObjectType({
       type: englishObjectType
     },
     japanese: {
+      // type: new GraphQLList(japaneseObjectType)
       type: japaneseObjectType
     }
   })
@@ -51,7 +52,9 @@ let storeType = new GraphQLObjectType({
     translation: {
       type: translationType,
       args: { word: { type: GraphQLString }},
-      resolve: (_, {word}) => scraper.scrape( utf8.encode(word.toLowerCase()) )
+      resolve: (_, {word}) => {
+          return scraper.scrape( utf8.encode(word.toLowerCase()) )
+      }
     }
   })
 })
