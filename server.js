@@ -23,56 +23,61 @@ if (!isProduction) app.use(morgan('dev'));
 app.use(express.static(publicPath));
 
 (async() => {
-  // We only want to run the workflow when not in production
-  if (!isProduction) {
+  try {
 
-    // remove any old residue bundles in build folder
-    try {
-      console.log('Removing old bundles in build');
-      fs.unlinkSync('./public/build/bundle.js');
-      fs.unlinkSync('./public/build/bundle.js.map');
-    } catch (e) {
-      // throw e;
-      console.error('Files did not exist!\n');
+    // We only want to run the workflow when not in production
+    if (!isProduction) {
+
+      // remove any old residue bundles in build folder
+      try {
+        console.log('Removing old bundles in build');
+        fs.unlinkSync('./public/build/bundle.js');
+        fs.unlinkSync('./public/build/bundle.js.map');
+      } catch (e) {
+        // throw e;
+        console.error('Files did not exist!\n');
+      }
+
+      // We require the bundler inside the if block because
+      // it is only needed in a development environment. Later
+      // you will see why this is a good idea
+      let bundle = require('./server/bundle.js');
+      bundle();
+
+      // Any requests to localhost:3000/build is proxied
+      // to webpack-dev-server
+      app.all('/build/*', function(req, res) {
+        // console.log(req);
+        proxy.web(req, res, {
+          target: 'http://localhost:8080'
+        });
+      });
+
+
     }
 
-    // We require the bundler inside the if block because
-    // it is only needed in a development environment. Later
-    // you will see why this is a good idea
-    let bundle = require('./server/bundle.js');
-    bundle();
-
-    // Any requests to localhost:3000/build is proxied
-    // to webpack-dev-server
-    app.all('/build/*', function(req, res) {
-      // console.log(req);
-      proxy.web(req, res, {
-        target: 'http://localhost:8080'
-      });
+    // It is important to catch any errors from the proxy or the
+    // server will crash. An example of this is connecting to the
+    // server when webpack is bundling
+    proxy.on('error', function(e) {
+      console.log('Could not connect to proxy, please try again...');
     });
 
+    app.use('/graphql', GraphQLHTTP({
+      schema: schema,
+      graphiql: true
+    }));
 
+    // Generate schema.json for now
+    let json = await graphql(schema, introspectionQuery);
+    fs.writeFile('./data/schema.json', JSON.stringify(json, null, 2), err => {
+      if (err) throw err;
+      console.log("JSON schema created");
+    })
+
+    app.listen(port, () => console.log('Listening on port 3000'));
+
+  } catch (e) {
+    console.log(e);
   }
-
-  // It is important to catch any errors from the proxy or the
-  // server will crash. An example of this is connecting to the
-  // server when webpack is bundling
-  proxy.on('error', function(e) {
-    console.log('Could not connect to proxy, please try again...');
-  });
-
-  app.use('/graphql', GraphQLHTTP({
-    schema: schema,
-    graphiql: true
-  }));
-
-  // Generate schema.json for now
-  let json = await graphql(schema, introspectionQuery);
-  fs.writeFile('./data/schema.json', JSON.stringify(json, null, 2), err => {
-    if (err) throw err;
-    console.log("JSON schema created");
-  })
-
-  app.listen(port, () => console.log('Listening on port 3000'));
-
 })();
