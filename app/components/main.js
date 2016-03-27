@@ -41,15 +41,27 @@ class Main extends React.Component{
   }
 
   renderCards = (store) => {
-    [...Array(3)].map((x, i) => {
-      console.log(x, i);
+    return [...Array(5)].map((x, i) => {
       return (
-        <div className="col s12 m6 l4">
+        <div className="col s12 m6 l4" key={i}>
           <CardComponent translation={store.translation}/>
         </div>
       )
     })
+  }
 
+  renderInputField = () => {
+    return (
+      <div className="input-field col s12">
+        <input
+          disabled={this.state.searching}
+          id="keyword"
+          type="text"
+          className="validate"
+          onKeyUp={this.onChange}/>
+        <label htmlFor="keyword" className="active">Keyword</label>
+      </div>
+    );
   }
 
   render() {
@@ -57,20 +69,11 @@ class Main extends React.Component{
     return (
       <div className="container">
         <div className="row">
-          <div className="input-field col s12">
-            <input
-              disabled={this.state.searching}
-              id="keyword"
-              type="text"
-              className="validate"
-              onKeyUp={this.onChange}/>
-            <label htmlFor="keyword" className="active">Keyword</label>
-          </div>
+          {this.renderInputField()}
         </div>
         <div className="row">
           {this.renderCards(store)}
         </div>
-
       </div>
     )
   }
