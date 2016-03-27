@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./node_modules/babel-cli/bin/babel-node.js --presets react,es2015,stage-0 server.js",
     "dev": "nodemon --ignore data/schema.json",
-    "dev:webpack": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base ./public/ --progress --inline --hot --port 4000"
+    "dev:webpack": "./node_modules/webpack/bin/webpack.js -wd",
+    "dev:server": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base ./public/ --progress --inline --hot --port 4000"
   },
   "author": "Huy Tran",
   "license": "MIT",
