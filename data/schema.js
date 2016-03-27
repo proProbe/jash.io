@@ -35,6 +35,7 @@ let englishObjectType = new GraphQLObjectType({
 let translationType = new GraphQLObjectType({
   name: "Translation",
   fields: () => ({
+    keyword: { type: GraphQLString },
     english: {
       type: englishObjectType
     },

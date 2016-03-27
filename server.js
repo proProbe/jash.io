@@ -38,11 +38,11 @@ app.use(express.static(publicPath));
         console.error('Files did not exist!\n');
       }
 
-      // We require the bundler inside the if block because
-      // it is only needed in a development environment. Later
-      // you will see why this is a good idea
-      let bundle = require('./server/bundle.js');
-      bundle();
+    // We require the bundler inside the if block because
+    // it is only needed in a development environment. Later
+    // you will see why this is a good idea
+    let bundler = require('./server/bundler.js');
+    bundler();
 
       // Any requests to localhost:3000/build is proxied
       // to webpack-dev-server

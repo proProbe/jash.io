@@ -2,26 +2,20 @@ import React from "react";
 import Relay from "react-relay";
 
 class JapaneseContainer extends React.Component {
+
   render() {
     let {japanese} = this.props;
     return (
-      <div className="card green darken-1 hoverable">
-        <div className="card-content white-text">
-          <div className="card-title">
-              {/*Jap Translation*/}
+        <div>
+          <ruby style={{"fontSize": "150%"}}>
+            <rb >
               {japanese.kanji}
-          </div>
-          <p>
-            {japanese.furigana}
-            {japanese.type}
-          </p>
-          <div className="card-action">
-            <p>
-              {japanese.level}
-            </p>
-          </div>
+            </rb>
+            <rt>
+              {japanese.furigana}
+            </rt>
+          </ruby>
         </div>
-      </div>
     )
   }
 }
@@ -31,9 +25,7 @@ JapaneseContainer = Relay.createContainer(JapaneseContainer, {
     japanese: () => Relay.QL`
       fragment on Japanese {
         furigana,
-        kanji,
-        type,
-        level
+        kanji
       }
     `
   }

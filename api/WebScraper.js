@@ -18,6 +18,7 @@ class WebScraper {
         let english = this._scrapeEnglish($);
         let japanese = this._scrapeJapanese($);
         let json = {
+          keyword: word,
           english: english,
           japanese: japanese
         };
@@ -32,10 +33,10 @@ class WebScraper {
   _scrapeJapanese($) {
 
     let japanese = {
-      furigana: 'temp',
-      kanji: 'temp',
-      type: 'temp',
-      level: 'temp'
+      furigana: 'Not found',
+      kanji: 'Not found',
+      type: 'Not found',
+      level: 'Not found'
     };
 
     $('#primary > div.exact_block > div:nth-child(2) > div.concept_light-wrapper.columns.zero-padding').filter(function(i, el) {
@@ -52,8 +53,8 @@ class WebScraper {
   _scrapeEnglish($) {
 
     let english = {
-      meaning: 'nothing yet!',
-      tags: 'noething yet',
+      meaning: 'Not found',
+      tags: 'Not found',
       number: -1,
     };
     $('#primary > div.exact_block > div:nth-child(2) > div.concept_light-meanings.medium-9.columns > div.meanings-wrapper').filter(function(i, el) {

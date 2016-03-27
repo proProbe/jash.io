@@ -87,7 +87,7 @@ var config = {
     // expand with less-loader etc.
     {
       test: /\.css$/,
-      loader: 'style!css'
+      loader: 'style-loader!css-loader'
     }
 
     ]

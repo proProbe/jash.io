@@ -14,6 +14,7 @@ class HomeRoute extends Relay.Route {
     `
   }
   }
+
 }
 
 ReactDOM.render(
@@ -22,16 +23,16 @@ ReactDOM.render(
     route={new HomeRoute()}
     renderLoading={() => {
       return (
-        <div className="valign-wrapper">
-          <div className="valign row">
-            <div className="preloader-wrapper big active">
-              <div className="spinner-layer spinner-blue-only">
-                <div className="circle-clipper left">
-                  <div className="circle"></div>
-                </div>
-                <div className="gap-patch">
-                  <div className="circle"></div>
-                </div><div className="circle-clipper right">
+          <div className="valign-wrapper">
+            <div className="row">
+              <div className="preloader-wrapper big active">
+                <div className="spinner-layer spinner-blue-only">
+                  <div className="circle-clipper left">
+                    <div className="circle"></div>
+                  </div>
+                  <div className="gap-patch">
+                    <div className="circle"></div>
+                  </div><div className="circle-clipper right">
                   <div className="circle"></div>
                 </div>
               </div>
