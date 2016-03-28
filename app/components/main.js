@@ -14,11 +14,6 @@ class Main extends React.Component{
 
   state = { searching: false };
 
-  // Set state when new props arrives
-  componentWillReceiveProps() {
-    this.setState({ searching: false })
-  };
-
   componentDidMount() {
     document.getElementById('keyword').focus();
   }
@@ -31,9 +26,13 @@ class Main extends React.Component{
   onChange = (e) => {
     if(e.keyCode === 13) {
       let newWord = e.target.value;
-      this.setState({ searching: true });
       this.props.relay.setVariables({
         word: newWord
+      }, (readyState) => {
+        if (!readyState.done) {
+          return this.setState({ searching: true });
+        }
+        return this.setState({ searching: false });
       });
     }
   }
@@ -65,6 +64,7 @@ class Main extends React.Component{
 
   render() {
     let {store} = this.props
+    console.log(this.props.relay);
     return (
       <div className="container">
         <div className="row">

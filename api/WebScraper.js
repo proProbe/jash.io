@@ -38,7 +38,7 @@ class WebScraper {
       level: 'Level'
     };
 
-    $('#primary > div.exact_block  div.concept_light-wrapper.columns.zero-padding').filter(function(i, el) {
+    $('#primary > div.exact_block > div:nth-child(2) > div.concept_light-wrapper.columns.zero-padding').filter(function(i, el) {
       console.log(i);
       let data = $(this);
       japanese.furigana = data.find('span.furigana').first().text();
