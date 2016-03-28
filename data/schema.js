@@ -32,10 +32,9 @@ let englishObjectType = new GraphQLObjectType({
   })
 });
 
-let translationType = new GraphQLObjectType({
-  name: "Translation",
+let translationsType = new GraphQLObjectType({
+  name: "Translations",
   fields: () => ({
-    keyword: { type: GraphQLString },
     english: {
       type: englishObjectType
     },
@@ -43,6 +42,14 @@ let translationType = new GraphQLObjectType({
       // type: new GraphQLList(japaneseObjectType)
       type: japaneseObjectType
     }
+  })
+})
+
+let translationType = new GraphQLObjectType({
+  name: "Translation",
+  fields: () => ({
+    keyword: { type: GraphQLString },
+    translations: { type: new GraphQLList(translationsType) }
   })
 })
 

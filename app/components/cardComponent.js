@@ -8,24 +8,23 @@ import Tags from './tags.js';
 class CardComponent extends React.Component{
 
   render() {
-    let {translation} = this.props;
+    let {translations} = this.props;
     return (
       <div className="card green darken-1 hoverable">
         <div className="card-content white-text">
           <div className="card-title">
-            {translation.keyword}
+            {/*{translations.keyword}*/}
           </div>
-          <hr/>
           <div className="row">
             <div className="col s12 m4">
-              <JapaneseComponent japanese={translation.japanese}/>
+              <JapaneseComponent japanese={translations.japanese}/>
             </div>
             <div className="col s12 m8">
-              <EnglishComponent english={translation.english} />
+              <EnglishComponent english={translations.english} />
             </div>
           </div>
           <div className="row">
-            <Tags japanese={translation.japanese}/>
+            <Tags japanese={translations.japanese}/>
           </div>
         </div>
         {/*<div className="card-action">
@@ -38,9 +37,8 @@ class CardComponent extends React.Component{
 
 CardComponent = Relay.createContainer(CardComponent, {
   fragments: {
-    translation: () => Relay.QL`
-      fragment on Translation {
-        keyword,
+    translations: () => Relay.QL`
+      fragment on Translations {
         english {
           ${EnglishComponent.getFragment("english")}
         },

@@ -1,5 +1,6 @@
 import cheerio from 'cheerio';
 import request from 'request-promise';
+import _ from 'lodash';
 
 class WebScraper {
   constructor(baseURL = "http://jisho.org/search/") {
@@ -17,10 +18,16 @@ class WebScraper {
 
         let english = this._scrapeEnglish($);
         let japanese = this._scrapeJapanese($);
+        let translations = _.zipWith(english, japanese, (e, j) => {
+          return {
+            english: e,
+            japanese: j,
+          }
+        })
+
         let json = {
           keyword: word,
-          english: english,
-          japanese: japanese
+          translations: translations
         };
         return json
       })
@@ -38,41 +45,55 @@ class WebScraper {
       level: 'Level'
     };
 
-    $('#primary > div.exact_block > div:nth-child(2) > div.concept_light-wrapper.columns.zero-padding').filter(function(i, el) {
-      console.log(i);
+    $('#primary > div.exact_block div.concept_light-wrapper.columns.zero-padding').filter(function(i, el) {
+      let jap = {
+        furigana: 'Furigana',
+        kanji: 'Kanji',
+        type: 'Type',
+        level: 'Level'
+      };
       let data = $(this);
-      japanese.furigana = data.find('span.furigana').first().text();
-      japanese.kanji = data.find('span.text').first().text();
-      console.log(japanese.kanji);
-      japanese.type = data.find('span.concept_light-common').first().text();
-      japanese.level = data.find('span.concept_light-tag > a').first().text();
-      japArr.push(japanese);
+      jap.furigana = data.find('span.furigana').first().text();
+      jap.kanji = data.find('span.text').first().text();
+      jap.type = data.find('span.concept_light-common').first().text();
+      jap.level = data.find('span.concept_light-tag > a').first().text();
+      japArr.push(jap);
     });
 
     // if the arr is empty, init it
-    // if (japArr.length === 0) {
-    //   japArr.push(japanese);
-    // }
-    //
-    // return japArr;
-    return japanese;
+    if (japArr.length === 0) {
+      japArr.push(japanese);
+    }
+
+    return japArr;
+    // return japanese;
   }
 
   _scrapeEnglish($) {
-
+    let engArr = [];
     let english = {
       meaning: 'Meaning',
       tags: 'Tags',
       number: -1,
     };
-    $('#primary > div.exact_block > div:nth-child(2) > div.concept_light-meanings.medium-9.columns > div.meanings-wrapper').filter(function(i, el) {
+    $('#primary > div.exact_block div.concept_light-meanings.medium-9.columns > div.meanings-wrapper').filter(function(i, el) {
+      let eng = {
+        meaning: 'Meaning',
+        tags: 'Tags',
+        number: -1,
+      };
       let data = $(this);
-      english.meaning = data.find('.meaning-wrapper .meaning-meaning').first().text();
-      english.number = data.find('.meaning-wrapper .meaning-definition-section_divider').first().text();
-      english.tags = data.find('.meaning-tags').first().text();
+      eng.meaning = data.find('.meaning-wrapper .meaning-meaning').first().text();
+      eng.number = data.find('.meaning-wrapper .meaning-definition-section_divider').first().text();
+      eng.tags = data.find('.meaning-tags').first().text();
+      engArr.push(eng);
     });
 
-    return english;
+    if (engArr.length === 0) {
+      engArr.push(english);
+    }
+    return engArr;
+    // return english;
   }
 }
 

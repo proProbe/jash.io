@@ -16,10 +16,8 @@ let isProduction = process.env.NODE_ENV === 'production';
 let port = isProduction ? process.env.PORT : 3000;
 let publicPath = path.resolve(__dirname, 'public');
 
-let proxy = httpProxy.createProxyServer();
 let app = express();
-
-if (!isProduction) app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(express.static(publicPath));
 
 (async() => {
@@ -27,6 +25,8 @@ app.use(express.static(publicPath));
 
     // We only want to run the workflow when not in production
     if (!isProduction) {
+      let proxy = httpProxy.createProxyServer();
+
 
       // remove any old residue bundles in build folder
       try {
@@ -53,15 +53,14 @@ app.use(express.static(publicPath));
         });
       });
 
+      // It is important to catch any errors from the proxy or the
+      // server will crash. An example of this is connecting to the
+      // server when webpack is bundling
+      proxy.on('error', function(e) {
+        console.log('Could not connect to proxy, please try again...');
+      });
 
     }
-
-    // It is important to catch any errors from the proxy or the
-    // server will crash. An example of this is connecting to the
-    // server when webpack is bundling
-    proxy.on('error', function(e) {
-      console.log('Could not connect to proxy, please try again...');
-    });
 
     app.use('/graphql', GraphQLHTTP({
       schema: schema,
@@ -75,7 +74,7 @@ app.use(express.static(publicPath));
       console.log("JSON schema created");
     })
 
-    app.listen(port, () => console.log('Listening on port 3000'));
+    app.listen(port, () => console.log('Listening on port ' + port));
 
   } catch (e) {
     console.log(e);

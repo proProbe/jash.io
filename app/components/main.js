@@ -1,7 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
 
-import CardComponent from './cardComponent';
+import CardContainer from './cardContainer';
 
 class Main extends React.Component{
   static propTypes = {
@@ -37,17 +37,6 @@ class Main extends React.Component{
     }
   }
 
-  renderCards = (store) => {
-    console.log(store);
-    return [...Array(5)].map((x, i) => {
-      return (
-        <div className="col s12 m6 l4" key={i}>
-          <CardComponent translation={store.translation}/>
-        </div>
-      )
-    })
-  }
-
   renderInputField = () => {
     return (
       <div className="input-field col s12">
@@ -64,14 +53,13 @@ class Main extends React.Component{
 
   render() {
     let {store} = this.props
-    console.log(this.props.relay);
     return (
       <div className="container">
         <div className="row">
           {this.renderInputField()}
         </div>
         <div className="row">
-          {this.renderCards(store)}
+          <CardContainer translation={store.translation} />
         </div>
       </div>
     )
@@ -86,7 +74,7 @@ Main = Relay.createContainer(Main, {
     store: () => Relay.QL`
       fragment on Store {
         translation (word: $word) {
-          ${CardComponent.getFragment('translation')}
+          ${CardContainer.getFragment('translation')}
         }
       }
     `
