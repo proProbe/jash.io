@@ -46,7 +46,7 @@ class Main extends React.Component{
           type="text"
           className="validate"
           onKeyUp={this.onChange}/>
-        <label htmlFor="keyword" className="active">Keyword</label>
+        <label for="keyword" className="active">Keyword</label>
       </div>
     );
   }
